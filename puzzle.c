@@ -6,12 +6,19 @@
 int read_magicNumber(FILE *input, puzzle *element)
 {
 
-    if(fscanf(input, "%s", element->magicNumber) != 1){
-        return DATEI_ERROR;
-    }
-    if(strstr(element->magicNumber, "P2") == NULL){
+    char magic[10];
+    if(fscanf(input, "%s", magic) != 1){
         return DATEI_FORMAT_ERROR;
     }
+        
+    
+
+    if(strstr(magic, "P2") == NULL){
+        return DATEI_FORMAT_ERROR;
+    }
+    element->magicNumber = malloc((strlen(magic) +1) * sizeof(char));
+
+    strcpy(element->magicNumber, magic);
     return OK;
 
 }
@@ -71,7 +78,7 @@ void add_element(puzzle *root, puzzle *new){
 puzzle* new_puzzle(void)
 {
     puzzle *new = malloc(sizeof(puzzle));
-    new->magicNumber = malloc(sizeof(char) * 10);
+    new->magicNumber = NULL;
     new->maxGrauwert = 0;
     new->pixle = NULL;
     new->spalten = 0;
@@ -84,10 +91,9 @@ puzzle* new_puzzle(void)
 //./puzzle images/berge_puzzleteil1.pgm output.pgm
 int read_all_files(int argc, char **argv, puzzle **root){
     puzzle *ptr ;
-    for (size_t i = 1; i < argc - 1; i++)
-    {
+    
         puzzle *element = new_puzzle();
-        if(read_one_file(argv[i], element) != OK){
+        if(read_one_file(argv[1], element) != OK){
             free_element(element);
             free(root);
             return DATEI_ERROR;
@@ -95,7 +101,7 @@ int read_all_files(int argc, char **argv, puzzle **root){
         ptr = element;
         //add_elemnt(root, element);
        
-    }
+    
     
     print_one_file(ptr, argv[argc - 1]);
     free(ptr);
@@ -161,7 +167,11 @@ void free_puzzle(puzzle **root){
 }
 
 void free_element(puzzle* element){
-    free(element->magicNumber);
     free(element->pixle);
+    free(element->pixle);
+
+
+    free(element->magicNumber);
+    
     free(element);
 }

@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include"puzzle.h"
+#include<stdlib.h>
 
 
 int main(int argc, char** argv){
@@ -26,12 +27,12 @@ int main(int argc, char** argv){
         return status;
     }
 
-    
+
     print_puzzle(root, stdout);
     free_puzzle(root);
 
 
 
-   
+   free(root);
    return 0;
 }
