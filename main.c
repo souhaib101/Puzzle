@@ -7,7 +7,7 @@ int main(int argc, char** argv){
     /*
     at least we got 3 string input {"./puzzle", "eingabe.txt", "ausgabe.txt"}
     */
-    if(argc <= 3){
+    if(argc < 3){
         return 1;
     }
 
@@ -18,9 +18,15 @@ int main(int argc, char** argv){
     */
     
     // pointer to hold the adress of first puzzle 
-    puzzle *root = NULL;
+    puzzle **root = NULL;
     
-    read_all_files(argc, argv, &root);
+    Error status = OK;
+    if((status = read_all_files(argc, argv, root)) != OK){
+        
+        return status;
+    }
+
+    
     print_puzzle(root, stdout);
     free_puzzle(root);
 
