@@ -19,7 +19,8 @@ typedef struct puzzle
 
 
 
-void read_all_files(int argc, char ** argv, char **root);
+void read_all_files(int argc, char ** argv, puzzle **root);
 
 void print_puzzle(puzzle *root, FILE *output);
- void free_puzzle(puzzle *root);
+
+void free_puzzle(puzzle *root);
